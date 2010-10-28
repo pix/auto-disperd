@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# First script which launch autodisper when a change has
+# been detected on power line or the lid has been opened
+#
+
+dbus-monitor --system \
+    "type='signal',path='/org/freedesktop/UPower/devices/line_power_AC',interface='org.freedesktop.UPower.Device'" \
+    "type='signal',path='/org/freedesktop/UPower',interface='org.freedesktop.UPower'" \
+    | while read LINE; do
+        sleep 1
+        auto-disper -c
+    done
